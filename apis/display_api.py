@@ -39,7 +39,7 @@ class DisplayAPI(object):
         for _ in range(5):
             st.write(" ")
         st.write(f'''<h1 style="font-size:80px;">
-                Explorify  <a style="text-decoration: none;" target="_self"
+                Explorify  <a style="text-decoration: none;" target="_blank"
                 href="{url}"><img src="https://cdn3.emoji.gg/emojis/SpotifyLogo.png" width="65px" height="65px" alt="SpotifyLogo"></a></h1>''',
                     unsafe_allow_html=True)
         st.write("Click the icon to sign in. Happy exploring!")

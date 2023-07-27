@@ -3,18 +3,20 @@ import requests
 from collections import deque
 from random import sample
 from datetime import date
+import streamlit as st
+import json
 
 class SpotifyAPI(object):
     
     def __init__(self, access_token):
         self.sp = spotipy.Spotify(auth=access_token)
         self.access_token = access_token
-        self.headers = {"Authorization": f"Bearer {self.access_token}"}
+        self.headers = {"Authorization": f"Bearer {self.access_token}", 'Accept': 'application/json'}
         
     def get_username_and_profile_image(self):
         endpoint = "https://api.spotify.com/v1/me"
         r = requests.get(endpoint, headers=self.headers)
-        data = r.json()
+        data = json.loads(r.text)
         username = data['display_name']
         profile_image = None
         if len(data['images']) != 0:
@@ -43,14 +45,14 @@ class SpotifyAPI(object):
     def get_top_artists(self, number, timeframe):
         endpoint = f"https://api.spotify.com/v1/me/top/artists?time_range={timeframe}&limit={number}"
         r = requests.get(endpoint, headers=self.headers)
-        data = r.json()
+        data = json.loads(r.text)
         results = [self.get_artist_data(entry) for entry in data['items']] 
         return results
     
     def get_top_songs(self, number, timeframe):
         endpoint = f"https://api.spotify.com/v1/me/top/tracks?time_range={timeframe}&limit={number}"
         r = requests.get(endpoint, headers=self.headers)
-        data = r.json()
+        data = json.loads(r.text)
         results = [self.get_song_data(entry) for entry in data['items']]
         return results
     
@@ -71,7 +73,7 @@ class SpotifyAPI(object):
     def get_related_artists(self, id):
         endpoint = f"https://api.spotify.com/v1/artists/{id}/related-artists"
         r = requests.get(endpoint, headers=self.headers)
-        data = r.json()
+        data = json.loads(r.text)
         result = [artist["id"] for artist in data["artists"]]
         return result
     
@@ -99,7 +101,7 @@ class SpotifyAPI(object):
         for id in recommended_artists_ids:
             endpoint = f"https://api.spotify.com/v1/artists/{id}"
             r = requests.get(endpoint, headers=self.headers)
-            artist = r.json()
+            artist = json.loads(r.text)
             results.append(self.get_artist_data(artist))
         return results
     
@@ -109,7 +111,7 @@ class SpotifyAPI(object):
         seed_songs = ','.join(sample(top_song_ids, 3))
         endpoint = f"https://api.spotify.com/v1/recommendations?seed_artists={seed_artists}&seed_tracks={seed_songs}"
         r = requests.get(endpoint, headers=self.headers)
-        data = r.json()
+        data = json.loads(r.text)
         results = [entry["id"] for entry in data["tracks"]]
         return results
 
@@ -118,7 +120,7 @@ class SpotifyAPI(object):
         for id in recommended_songs_ids:
             endpoint = f"https://api.spotify.com/v1/tracks/{id}"
             r = requests.get(endpoint, headers=self.headers)
-            song = r.json()
+            song = json.loads(r.text)
             results.append(self.get_song_data(song))
         return results
 
