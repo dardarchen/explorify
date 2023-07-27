@@ -43,6 +43,7 @@ class DisplayAPI(object):
                 href="{url}"><img src="https://cdn3.emoji.gg/emojis/SpotifyLogo.png" width="65px" height="65px" alt="SpotifyLogo"></a></h1>''',
                     unsafe_allow_html=True)
         st.write("Click the icon to sign in. Happy exploring!")
+        st.write('''<p style="font-size:12px; color:#716586">Built by Darren Chen</p>''', unsafe_allow_html=True)
         
     def display_username(self, username):
         for _ in range(2):
