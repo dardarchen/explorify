@@ -73,7 +73,7 @@ class DisplayAPI(object):
                 name, url, popularity, image, _ = entry
                 col.image(self.circle_crop_image(image))
                 col.write(f'''<center><h5>
-                <a style="color: #ffffff; text-decoration: none;" target="_self"
+                <a style="color: #ffffff; text-decoration: none;" target="_blank"
                 href="{url}">{name}</a></h5></center>''',
                     unsafe_allow_html=True)
     
