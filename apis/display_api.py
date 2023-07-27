@@ -52,8 +52,8 @@ class DisplayAPI(object):
     
     def display_profile_image(self, profile_image):
         st.write(" ")
-        columns = st.columns(5)
-        columns[2].image(self.circle_crop_image(profile_image))
+        columns = st.columns((3, 1, 3))
+        columns[1].image(self.circle_crop_image(profile_image))
         st.write(" ")
 
     def display_artists(self, data):
