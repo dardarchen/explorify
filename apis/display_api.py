@@ -68,7 +68,7 @@ class DisplayAPI(object):
             chunks.append(curr)
         for chunk in chunks:
             columns = st.columns((2, 1, 2, 1, 2, 1, 2, 1, 2))
-            for i in range(0, 9, 2):
+            for i in range(0, 2 * len(chunk) - 1, 2):
                 col, entry = columns[i], chunk[i // 2]
                 name, url, popularity, image, _ = entry
                 col.image(self.circle_crop_image(image))
